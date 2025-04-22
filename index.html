@@ -22,7 +22,7 @@
 
         body {
             color: #294e28;
-            background: #031a09;
+            background: linear-gradient(to bottom, #f5f5f5, #e0e7d3); /* Light gradient replacing #031a09 */
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
         }
@@ -45,42 +45,34 @@
 
         .loader.hidden {
             opacity: 0;
-            display: none; /* Ensure loader is fully hidden */
+            display: none;
             pointer-events: none;
         }
 
         .ring-loader {
             display: inline-block;
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 60px; /* Smaller for mobile */
+            height: 60px;
         }
 
         .ring-loader div {
             box-sizing: border-box;
             display: block;
             position: absolute;
-            width: 64px;
-            height: 64px;
-            margin: 8px;
-            border: 8px solid #e2f87b;
+            width: 48px;
+            height: 48px;
+            margin: 6px;
+            border: 6px solid #e2f87b;
             border-radius: 50%;
             animation: ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
             border-color: #e2f87b transparent transparent transparent;
-            box-shadow: 0 0 5px #e2f87b; /* Subtle glow for visibility */
+            box-shadow: 0 0 5px #e2f87b;
         }
 
-        .ring-loader div:nth-child(1) {
-            animation-delay: -0.45s;
-        }
-
-        .ring-loader div:nth-child(2) {
-            animation-delay: -0.3s;
-        }
-
-        .ring-loader div:nth-child(3) {
-            animation-delay: -0.15s;
-        }
+        .ring-loader div:nth-child(1) { animation-delay: -0.45s; }
+        .ring-loader div:nth-child(2) { animation-delay: -0.3s; }
+        .ring-loader div:nth-child(3) { animation-delay: -0.15s; }
 
         @keyframes ring {
             0% { transform: rotate(0deg); }
@@ -89,8 +81,8 @@
 
         /* Main Content */
         main {
-            visibility: hidden; /* Hidden until loader completes */
-            transition: visibility 0s linear 11s; /* Matches loader duration */
+            visibility: hidden;
+            transition: visibility 0s linear 11s;
         }
 
         main.visible {
@@ -102,9 +94,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(49, 108, 64, 0.9); /* #316c40 */
+            background: rgba(49, 108, 64, 0.95); /* #316c40 */
             padding: 1rem 2rem;
             z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand {
@@ -131,6 +124,13 @@
             color: #e2f87b;
         }
 
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: #e2f87b;
+            cursor: pointer;
+        }
+
         /* Hero Section with 3D Canvas */
         .hero {
             height: 100vh;
@@ -148,7 +148,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none; /* Prevent canvas from blocking interactions */
+            pointer-events: none;
         }
 
         .hero-content {
@@ -157,6 +157,7 @@
             text-align: left;
             max-width: 600px;
             margin-left: 5%;
+            padding: 1rem;
         }
 
         .hero-content h1 {
@@ -171,19 +172,19 @@
             color: #294e28;
             font-weight: 300;
             line-height: 1.8;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* Sections */
         section {
-            padding: 5rem 0;
+            padding: 4rem 1rem;
             position: relative;
         }
 
         h2 {
             font-size: 2.5rem;
             font-family: 'Playfair Display', serif;
-            color: #e2f87b;
+            color: #316c40;
             text-align: center;
             margin-bottom: 2rem;
             position: relative;
@@ -205,6 +206,8 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .about-text {
@@ -212,29 +215,35 @@
             font-size: 1rem;
             line-height: 1.8;
             font-weight: 300;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .about-image img {
             border-radius: 10px;
             max-width: 100%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .skill-card {
-            background: rgba(49, 108, 64, 0.2); /* #316c40 */
+            background: rgba(49, 108, 64, 0.1);
             border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
             color: #e2f87b;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .skill-card i {
@@ -245,20 +254,28 @@
         /* Projects Section */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .project-card {
-            background: rgba(49, 108, 64, 0.2); /* #316c40 */
+            background: rgba(49, 108, 64, 0.1);
             border-radius: 10px;
             overflow: hidden;
             position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .project-card img {
             width: 100%;
-            height: 180px;
+            height: 160px;
             object-fit: cover;
         }
 
@@ -273,13 +290,14 @@
             color: #294e28;
             font-size: 0.9rem;
             margin: 0 1rem 1rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         /* Contact Section */
         .contact-content {
             text-align: center;
             color: #294e28;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .social-links a {
@@ -291,7 +309,7 @@
         }
 
         .social-links a:hover {
-            color: #fff;
+            color: #316c40;
         }
 
         .social-links i {
@@ -315,7 +333,7 @@
             bottom: 20px;
             right: 20px;
             background: #e2f87b;
-            color: #031a09;
+            color: #316c40;
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -324,6 +342,11 @@
             align-items: center;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
         }
 
         .whatsapp-float i {
@@ -338,7 +361,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(3, 26, 9, 0.8); /* #031a09 */
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 2000;
@@ -348,7 +371,8 @@
             background: #316c40;
             border-radius: 10px;
             padding: 2rem;
-            max-width: 500px;
+            max-width: 90%;
+            width: 500px;
             color: #294e28;
         }
 
@@ -367,10 +391,15 @@
 
         .btn-submit {
             background: #e2f87b;
-            color: #031a09;
+            color: #316c40;
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: #d4e964;
         }
 
         .alert {
@@ -382,13 +411,18 @@
         /* Footer */
         footer {
             background: #316c40;
-            color: #294e28;
+            color: #e2f87b;
             text-align: center;
             padding: 1.5rem;
             font-size: 0.8rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .hero {
+                height: 80vh;
+            }
+
             .hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -397,17 +431,95 @@
                 font-size: 1rem;
             }
 
-            .about-content {
-                flex-direction: column;
-            }
-
             .navbar {
                 padding: 0.8rem 1rem;
             }
 
+            .hamburger {
+                display: block;
+            }
+
             .nav-links {
+                display: none;
                 flex-direction: column;
                 align-items: center;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #316c40;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card img {
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .ring-loader {
+                width: 50px;
+                height: 50px;
+            }
+
+            .ring-loader div {
+                width: 40px;
+                height: 40px;
+                margin: 5px;
+                border-width: 5px;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                margin-left: 3%;
+                padding: 0.5rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+
+            .whatsapp-float {
+                width: 40px;
+                height: 40px;
+            }
+
+            .whatsapp-float i {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -461,6 +573,7 @@
         <nav class="navbar">
             <div class="container">
                 <a class="navbar-brand" href="#home">E-right</a>
+                <span class="hamburger" onclick="toggleNav()"><i class="fas fa-bars"></i></span>
                 <div class="nav-links">
                     <a href="#home">Home</a>
                     <a href="#about">About</a>
@@ -541,7 +654,7 @@
                     <a href="https://facebook.com/ebonnebright" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
                     <a href="https://twitter.com/ebonnebright" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
                     <a href="https://linkedin.com/in/ebonnebright" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                    <a href="https://instagram.com/ebonnebright" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                      <a href="https://instagram.com/ebonnebright" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
                 </div>
                 <div class="email-link">
                     <a href="mailto:contact@ebonnebright.com"><i class="fas fa-envelope"></i> contact@ebonnebright.com</a>
@@ -561,12 +674,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
+        // Toggle Navbar for Mobile
+        function toggleNav() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
         // Fallback to hide loader after 10 seconds
         setTimeout(() => {
             const loader = document.querySelector('.loader');
             loader.classList.add('hidden');
             document.querySelector('main').classList.add('visible');
-        }, 11000); // 10s + 1s fade
+        }, 11000);
 
         // Check WebGL Support
         function isWebGLSupported() {
@@ -603,7 +722,6 @@
                     scene.add(model);
                 }, undefined, (error) => {
                     console.error('Error loading GLTF model:', error);
-                    // Fallback: Hide loader if model fails
                     document.querySelector('.loader').classList.add('hidden');
                     document.querySelector('main').classList.add('visible');
                 });
@@ -628,7 +746,6 @@
                 });
             } catch (e) {
                 console.error('Three.js initialization failed:', e);
-                // Fallback: Hide loader and show content
                 document.querySelector('.loader').classList.add('hidden');
                 document.querySelector('main').classList.add('visible');
             }
@@ -647,7 +764,7 @@
                 gsap.to('.loader', {
                     opacity: 0,
                     duration: 1,
-                    delay: 10, // 10-second duration
+                    delay: 10,
                     onComplete: () => {
                         document.querySelector('.loader').classList.add('hidden');
                         document.querySelector('main').classList.add('visible');
@@ -775,11 +892,11 @@
                 });
             } catch (e) {
                 console.error('GSAP animations failed:', e);
-                // Fallback: Show content
                 document.querySelector('.loader').classList.add('hidden');
                 document.querySelector('main').classList.add('visible');
             }
         });
     </script>
 </body>
-</html>
+    </html>
+                        
