@@ -45,6 +45,7 @@
 
         .loader.hidden {
             opacity: 0;
+            display: none; /* Ensure loader is fully hidden */
             pointer-events: none;
         }
 
@@ -66,6 +67,7 @@
             border-radius: 50%;
             animation: ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
             border-color: #e2f87b transparent transparent transparent;
+            box-shadow: 0 0 5px #e2f87b; /* Subtle glow for visibility */
         }
 
         .ring-loader div:nth-child(1) {
@@ -81,12 +83,18 @@
         }
 
         @keyframes ring {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main Content */
+        main {
+            visibility: hidden; /* Hidden until loader completes */
+            transition: visibility 0s linear 11s; /* Matches loader duration */
+        }
+
+        main.visible {
+            visibility: visible;
         }
 
         /* Navbar */
@@ -140,6 +148,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none; /* Prevent canvas from blocking interactions */
         }
 
         .hero-content {
@@ -162,6 +171,7 @@
             color: #294e28;
             font-weight: 300;
             line-height: 1.8;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         /* Sections */
@@ -413,130 +423,132 @@
         </div>
     </div>
 
-    <!-- WhatsApp Float -->
-    <a href="#" class="whatsapp-float" onclick="openModal('whatsappModal')" aria-label="Open WhatsApp contact form">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <main>
+        <!-- WhatsApp Float -->
+        <a href="#" class="whatsapp-float" onclick="openModal('whatsappModal')" aria-label="Open WhatsApp contact form">
+            <i class="fab fa-whatsapp"></i>
+        </a>
 
-    <!-- WhatsApp Modal -->
-    <div class="modal" id="whatsappModal">
-        <div class="modal-content">
-            <h5>Contact via WhatsApp</h5>
-            <div id="formError" class="alert alert-danger" style="display: none;">Please fill out all fields.</div>
-            <div id="formSuccess" class="alert alert-success" style="display: none;">Message prepared! Redirecting...</div>
-            <form id="whatsappForm">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" required aria-describedby="nameHelp">
-                    <div id="nameHelp" class="form-text visually-hidden">Please enter your full name.</div>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" required aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text visually-hidden">Please enter a valid email address.</div>
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" rows="3" required aria-describedby="messageHelp"></textarea>
-                    <div id="messageHelp" class="form-text visually-hidden">Please enter your message.</div>
-                </div>
-                <button type="submit" class="btn btn-submit">Send Message</button>
-            </form>
-            <button class="btn btn-submit mt-2" onclick="closeModal('whatsappModal')">Close</button>
-        </div>
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#home">E-right</a>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+        <!-- WhatsApp Modal -->
+        <div class="modal" id="whatsappModal">
+            <div class="modal-content">
+                <h5>Contact via WhatsApp</h5>
+                <div id="formError" class="alert alert-danger" style="display: none;">Please fill out all fields.</div>
+                <div id="formSuccess" class="alert alert-success" style="display: none;">Message prepared! Redirecting...</div>
+                <form id="whatsappForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" required aria-describedby="nameHelp">
+                        <div id="nameHelp" class="form-text visually-hidden">Please enter your full name.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text visually-hidden">Please enter a valid email address.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="3" required aria-describedby="messageHelp"></textarea>
+                        <div id="messageHelp" class="form-text visually-hidden">Please enter your message.</div>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Send Message</button>
+                </form>
+                <button class="btn btn-submit mt-2" onclick="closeModal('whatsappModal')">Close</button>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section with 3D -->
-    <section id="home" class="hero">
-        <canvas id="three-canvas"></canvas>
-        <div class="hero-content">
-            <h1>Ebonne Bright</h1>
-            <p>Web Developer & UI/UX Designer Crafting Immersive Digital Experiences</p>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="parallax-section">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Ebonne Bright is a skilled web developer and designer with over five years of experience creating user-centric digital solutions. Combining technical expertise with a refined aesthetic sense, Ebonne delivers projects that are both functional and visually stunning.</p>
-                </div>
-                <div class="about-image">
-                    <img src="bright.jpg" alt="Ebonne Bright" loading="lazy">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#home">E-right</a>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <!-- Skills Section -->
-    <section id="skills" class="parallax-section">
-        <div class="container">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card"><i class="fas fa-code"></i><p>HTML5 & CSS3</p></div>
-                <div class="skill-card"><i class="fab fa-js"></i><p>JavaScript (ES6+)</p></div>
-                <div class="skill-card"><i class="fab fa-react"></i><p>React.js</p></div>
-                <div class="skill-card"><i class="fab fa-node-js"></i><p>Node.js</p></div>
+        <!-- Hero Section with 3D -->
+        <section id="home" class="hero">
+            <canvas id="three-canvas"></canvas>
+            <div class="hero-content">
+                <h1>Ebonne Bright</h1>
+                <p>Web Developer & UI/UX Designer Crafting Immersive Digital Experiences</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="parallax-section">
-        <div class="container">
-            <h2>Selected Works</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <img src="light.png" alt="Luxe Web Platform" loading="lazy">
-                    <h3><i class="fas fa-globe"></i> Luxe Web Platform</h3>
-                    <p>A bespoke web app built with React and Node.js, featuring seamless animations.</p>
-                </div>
-                <div class="project-card">
-                    <img src="section.webp" alt="Elegant E-Commerce" loading="lazy">
-                    <h3><i class="fas fa-shopping-cart"></i> Elegant E-Commerce</h3>
-                    <p>A minimalist online store powered by Next.js with Stripe integration.</p>
-                </div>
-                <div class="project-card">
-                    <img src="bay.jpg" alt="Timeless Portfolio" loading="lazy">
-                    <h3><i class="fas fa-briefcase"></i> Timeless Portfolio</h3>
-                    <p>A refined portfolio with advanced animations and responsive design.</p>
+        <!-- About Section -->
+        <section id="about" class="parallax-section">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Ebonne Bright is a skilled web developer and designer with over five years of experience creating user-centric digital solutions. Combining technical expertise with a refined aesthetic sense, Ebonne delivers projects that are both functional and visually stunning.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="bright.jpg" alt="Ebonne Bright" loading="lazy">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="parallax-section">
-        <div class="container contact-content">
-            <h2>Contact Me</h2>
-            <p>Let’s collaborate! Use the WhatsApp form, email me, or connect via social media.</p>
-            <div class="social-links">
-                <a href="https://facebook.com/ebonnebright" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-                <a href="https://twitter.com/ebonnebright" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="https://linkedin.com/in/ebonnebright" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="https://instagram.com/ebonnebright" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <!-- Skills Section -->
+        <section id="skills" class="parallax-section">
+            <div class="container">
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card"><i class="fas fa-code"></i><p>HTML5 & CSS3</p></div>
+                    <div class="skill-card"><i class="fab fa-js"></i><p>JavaScript (ES6+)</p></div>
+                    <div class="skill-card"><i class="fab fa-react"></i><p>React.js</p></div>
+                    <div class="skill-card"><i class="fab fa-node-js"></i><p>Node.js</p></div>
+                </div>
             </div>
-            <div class="email-link">
-                <a href="mailto:contact@ebonnebright.com"><i class="fas fa-envelope"></i> contact@ebonnebright.com</a>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="parallax-section">
+            <div class="container">
+                <h2>Selected Works</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <img src="light.png" alt="Luxe Web Platform" loading="lazy">
+                        <h3><i class="fas fa-globe"></i> Luxe Web Platform</h3>
+                        <p>A bespoke web app built with React and Node.js, featuring seamless animations.</p>
+                    </div>
+                    <div class="project-card">
+                        <img src="section.webp" alt="Elegant E-Commerce" loading="lazy">
+                        <h3><i class="fas fa-shopping-cart"></i> Elegant E-Commerce</h3>
+                        <p>A minimalist online store powered by Next.js with Stripe integration.</p>
+                    </div>
+                    <div class="project-card">
+                        <img src="bay.jpg" alt="Timeless Portfolio" loading="lazy">
+                        <h3><i class="fas fa-briefcase"></i> Timeless Portfolio</h3>
+                        <p>A refined portfolio with advanced animations and responsive design.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="parallax-section">
+            <div class="container contact-content">
+                <h2>Contact Me</h2>
+                <p>Let’s collaborate! Use the WhatsApp form, email me, or connect via social media.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/ebonnebright" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="https://twitter.com/ebonnebright" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://linkedin.com/in/ebonnebright" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://instagram.com/ebonnebright" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                </div>
+                <div class="email-link">
+                    <a href="mailto:contact@ebonnebright.com"><i class="fas fa-envelope"></i> contact@ebonnebright.com</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -549,179 +561,224 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        // Three.js Setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        // Fallback to hide loader after 10 seconds
+        setTimeout(() => {
+            const loader = document.querySelector('.loader');
+            loader.classList.add('hidden');
+            document.querySelector('main').classList.add('visible');
+        }, 11000); // 10s + 1s fade
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xe2f87b, 0.5); // Light Lime tint
-        scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0xe2f87b, 1);
-        pointLight.position.set(5, 5, 5);
-        scene.add(pointLight);
-
-        // Load Blender Model
-        const loader = new THREE.GLTFLoader();
-        let model;
-        loader.load('model.gltf', (gltf) => {
-            model = gltf.scene;
-            model.scale.set(0.5, 0.5, 0.5);
-            model.position.set(0, -1, -5);
-            scene.add(model);
-        }, undefined, (error) => {
-            console.error('Error loading GLTF model:', error);
-        });
-
-        camera.position.z = 5;
-
-        // Animation Loop
-        function animate() {
-            requestAnimationFrame(animate);
-            if (model) {
-                model.rotation.y += 0.01;
+        // Check WebGL Support
+        function isWebGLSupported() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
             }
-            renderer.render(scene, camera);
         }
-        animate();
 
-        // Resize Handler
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        // Three.js Setup
+        let scene, camera, renderer, model;
+        if (isWebGLSupported()) {
+            try {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0xe2f87b, 0.5);
+                scene.add(ambientLight);
+                const pointLight = new THREE.PointLight(0xe2f87b, 1);
+                pointLight.position.set(5, 5, 5);
+                scene.add(pointLight);
+
+                // Load Blender Model
+                const loader = new THREE.GLTFLoader();
+                loader.load('model.gltf', (gltf) => {
+                    model = gltf.scene;
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.position.set(0, -1, -5);
+                    scene.add(model);
+                }, undefined, (error) => {
+                    console.error('Error loading GLTF model:', error);
+                    // Fallback: Hide loader if model fails
+                    document.querySelector('.loader').classList.add('hidden');
+                    document.querySelector('main').classList.add('visible');
+                });
+
+                camera.position.z = 5;
+
+                // Animation Loop
+                function animate() {
+                    requestAnimationFrame(animate);
+                    if (model) {
+                        model.rotation.y += 0.01;
+                    }
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                // Resize Handler
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            } catch (e) {
+                console.error('Three.js initialization failed:', e);
+                // Fallback: Hide loader and show content
+                document.querySelector('.loader').classList.add('hidden');
+                document.querySelector('main').classList.add('visible');
+            }
+        } else {
+            console.warn('WebGL not supported. Skipping Three.js.');
+            document.querySelector('.loader').classList.add('hidden');
+            document.querySelector('main').classList.add('visible');
+        }
 
         // GSAP Animations
-        gsap.registerPlugin(ScrollTrigger);
+        window.addEventListener('load', () => {
+            try {
+                gsap.registerPlugin(ScrollTrigger);
 
-        // Loader Animation
-        gsap.to('.loader', {
-            opacity: 0,
-            duration: 1,
-            delay: 10, // 10-second duration
-            onComplete: () => document.querySelector('.loader').style.display = 'none'
-        });
+                // Loader Animation
+                gsap.to('.loader', {
+                    opacity: 0,
+                    duration: 1,
+                    delay: 10, // 10-second duration
+                    onComplete: () => {
+                        document.querySelector('.loader').classList.add('hidden');
+                        document.querySelector('main').classList.add('visible');
+                    }
+                });
 
-        // Hero Content Animation
-        gsap.from('.hero-content h1', {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
-        });
+                // Hero Content Animation
+                gsap.from('.hero-content h1', {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
 
-        gsap.from('.hero-content p', {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            delay: 0.2,
-            ease: 'power2.out'
-        });
+                gsap.from('.hero-content p', {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    delay: 0.2,
+                    ease: 'power2.out'
+                });
 
-        // Parallax Sections
-        document.querySelectorAll('.parallax-section').forEach(section => {
-            gsap.from(section.querySelectorAll('.container > *'), {
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
+                // Parallax Sections
+                document.querySelectorAll('.parallax-section').forEach(section => {
+                    gsap.from(section.querySelectorAll('.container > *'), {
+                        y: 100,
+                        opacity: 0,
+                        duration: 1,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    });
 
-            // Parallax Background
-            gsap.to(section, {
-                y: 50,
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                }
-            });
-        });
+                    // Parallax Background
+                    gsap.to(section, {
+                        y: 50,
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true
+                        }
+                    });
+                });
 
-        // Skills Cards
-        gsap.from('.skill-card', {
-            scale: 0.8,
-            opacity: 0,
-            stagger: 0.2,
-            duration: 0.5,
-            ease: 'back.out',
-            scrollTrigger: {
-                trigger: '#skills',
-                start: 'top 80%'
+                // Skills Cards
+                gsap.from('.skill-card', {
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.2,
+                    duration: 0.5,
+                    ease: 'back.out',
+                    scrollTrigger: {
+                        trigger: '#skills',
+                        start: 'top 80%'
+                    }
+                });
+
+                // Project Cards
+                gsap.from('.project-card', {
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.3,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: '#projects',
+                        start: 'top 80%'
+                    }
+                });
+
+                // Modal Animation
+                window.openModal = function(id) {
+                    const modal = document.getElementById(id);
+                    modal.style.display = 'flex';
+                    gsap.from(modal.querySelector('.modal-content'), {
+                        scale: 0.8,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'back.out'
+                    });
+                };
+
+                window.closeModal = function(id) {
+                    const modal = document.getElementById(id);
+                    gsap.to(modal.querySelector('.modal-content'), {
+                        scale: 0.8,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'back.in',
+                        onComplete: () => modal.style.display = 'none'
+                    });
+                };
+
+                // WhatsApp Form
+                document.getElementById('whatsappForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    const errorAlert = document.getElementById('formError');
+                    const successAlert = document.getElementById('formSuccess');
+
+                    if (!name || !email || !message) {
+                        errorAlert.style.display = 'block';
+                        successAlert.style.display = 'none';
+                        return;
+                    }
+
+                    errorAlert.style.display = 'none';
+                    successAlert.style.display = 'block';
+
+                    const phoneNumber = 'YOUR_PHONE_NUMBER';
+                    const whatsappMessage = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+                    setTimeout(() => {
+                        window.open(whatsappUrl, '_blank');
+                        document.getElementById('whatsappForm').reset();
+                        closeModal('whatsappModal');
+                    }, 1500);
+                });
+            } catch (e) {
+                console.error('GSAP animations failed:', e);
+                // Fallback: Show content
+                document.querySelector('.loader').classList.add('hidden');
+                document.querySelector('main').classList.add('visible');
             }
-        });
-
-        // Project Cards
-        gsap.from('.project-card', {
-            y: 50,
-            opacity: 0,
-            stagger: 0.3,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: '#projects',
-                start: 'top 80%'
-            }
-        });
-
-        // Modal Animation
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            modal.style.display = 'flex';
-            gsap.from(modal.querySelector('.modal-content'), {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.5,
-                ease: 'back.out'
-            });
-        }
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            gsap.to(modal.querySelector('.modal-content'), {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.5,
-                ease: 'back.in',
-                onComplete: () => modal.style.display = 'none'
-            });
-        }
-
-        // WhatsApp Form
-        document.getElementById('whatsappForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const errorAlert = document.getElementById('formError');
-            const successAlert = document.getElementById('formSuccess');
-
-            if (!name || !email || !message) {
-                errorAlert.style.display = 'block';
-                successAlert.style.display = 'none';
-                return;
-            }
-
-            errorAlert.style.display = 'none';
-            successAlert.style.display = 'block';
-
-            const phoneNumber = 'YOUR_PHONE_NUMBER';
-            const whatsappMessage = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-                document.getElementById('whatsappForm').reset();
-                closeModal('whatsappModal');
-            }, 1500);
         });
     </script>
 </body>
