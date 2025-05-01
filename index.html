@@ -1,0 +1,202 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhisperBox | Anonymous Messaging</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #a29bfe;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+    }
+    body {
+      background: var(--light);
+      color: var(--dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .container-box {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+    .btn-outline-primary {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    @media (max-width: 768px) {
+      .container-box {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-comment-dots me-2"></i>WhisperBox
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Create Inbox</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="send.html">Send Message</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="inbox.html">My Inbox</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="container-box text-center">
+          <h2 class="mb-4">Anonymous Message Inbox</h2>
+          <p class="lead mb-4">Create a private link to receive anonymous messages from anyone</p>
+          
+          <div class="d-grid gap-3 col-md-8 mx-auto">
+            <button class="btn btn-primary btn-lg" onclick="generateLink()">
+              <i class="fas fa-plus-circle me-2"></i>Create New Inbox
+            </button>
+            <a href="inbox.html" class="btn btn-outline-primary btn-lg">
+              <i class="fas fa-inbox me-2"></i>Access Existing Inbox
+            </a>
+          </div>
+
+          <div id="linkResult" class="mt-5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+          <div class="feature-icon">
+            <i class="fas fa-user-secret"></i>
+          </div>
+          <h4>Completely Anonymous</h4>
+          <p>No names, no accounts, no tracking. Just pure anonymity.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h4>Private by Design</h4>
+          <p>Messages stay in your browser and aren't stored on any server.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+          <div class="feature-icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <h4>Easy to Share</h4>
+          <p>One link to share, another to check your messages privately.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p class="mb-0">© 2023 WhisperBox | Anonymous Messaging Platform</p>
+      <small class="text-light">All messages are stored locally in your browser</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function generateRandomId() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    function generateLink() {
+      const inboxId = generateRandomId();
+      const link = `${location.origin}/inbox.html?id=${inboxId}`;
+      const shareLink = `${location.origin}/send.html?id=${inboxId}`;
+      
+      document.getElementById('linkResult').innerHTML = `
+        <div class='card'>
+          <div class='card-header bg-primary text-white'>
+            <h5 class='mb-0'>Your Inbox Created Successfully</h5>
+          </div>
+          <div class='card-body'>
+            <div class="mb-4">
+              <h6><i class="fas fa-eye-slash me-2"></i>Private Inbox Link</h6>
+              <p class="text-muted small">Bookmark this to check your messages privately</p>
+              <div class="input-group mb-3">
+                <input class='form-control' value='${link}' readonly onclick="this.select()">
+                <button class="btn btn-outline-secondary" onclick="navigator.clipboard.writeText('${link}')">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h6><i class="fas fa-share-alt me-2"></i>Public Share Link</h6>
+              <p class="text-muted small">Share this link to receive anonymous messages</p>
+              <div class="input-group mb-3">
+                <input class='form-control' value='${shareLink}' readonly onclick="this.select()">
+                <button class="btn btn-outline-secondary" onclick="navigator.clipboard.writeText('${shareLink}')">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <strong>Important:</strong> If you lose these links, you won't be able to access your messages.
+            </div>
+          </div>
+        </div>`;
+        
+      // Initialize empty messages array for this inbox
+      localStorage.setItem(`inbox_${inboxId}`, JSON.stringify([]));
+    }
+  </script>
+</body>
+</html>
