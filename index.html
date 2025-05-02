@@ -30,7 +30,7 @@
     document.getElementById('createBox').addEventListener('click', function() {
       const id = generateId();
       const inboxLink = `${location.origin}/inbox.html?id=${id}`;
-      const sendLink = `${location.origin}/send/${id}`;
+      const sendLink = `${location.origin}/send.html/${id}`;
       
       localStorage.setItem('whisperbox_id', id);
       
